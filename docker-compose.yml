@@ -15,13 +15,13 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - mongodb:/data/db
+      - mongo:/data/db
   prometheus:
     image: prom/prometheus:v2.20.1
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
+      - prometheus:/prometheus
     ports:
       - 9090:9090
     expose:
@@ -32,7 +32,7 @@ services:
     image: grafana/grafana:7.1.5
     container_name: grafana
     volumes:
-      - grafana_data:/var/lib/grafana
+      - grafana:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_AUTH_DISABLE_LOGIN_FORM=true
@@ -45,4 +45,8 @@ services:
     networks:
       - monitoring
 volumes:
- mongodb:
+ prometheus:
+ grafana:
+ mongo:
+networks:
+ monitoring:
